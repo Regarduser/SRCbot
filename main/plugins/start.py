@@ -1,14 +1,29 @@
-#Github.com/Regarduser
+#Github.com/Vasusen-code
 
-import os
-from .. import bot as Drone
-from telethon import events, Button
+from .. import API_ID, API_HASH, BOT_TOKEN, ACCESS
 
-from ethon.mystarts import start_srb
-    
-S = '/' + 's' + 't' + 'a' + 'r' + 't'
+from telethon import events, Button, TelegramClient
 
-@Drone.on(events.callbackquery.CallbackQuery(data="set"))
+import time, logging, os
+
+logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
+                    level=logging.WARNING)
+
+#connection
+bot = TelegramClient('bot', API_ID, API_HASH).start(bot_token=BOT_TOKEN) 
+st = "Send me Link of any message to clone it here, For private channel message, send invite link first.\n\nSUPPORT: @THE_DAILY_TV_SHOW\nDEV: @Siddharth907"
+
+@bot.on(events.NewMessage(incoming=True, pattern="/start"))
+async def start(event):
+    await event.reply(f'{st}', 
+                      buttons=[
+                              [Button.inline("SET THUMB.", data="sett"),
+                               Button.inline("REM THUMB.", data="remt")]
+                              ])
+    tag = f'[{event.sender.first_name}](tg://user?id={event.sender_id})'
+    await Drone.send_message(int(ACCESS_CHANNEL), f'{tag} started the BOT\nUserID: {event.sender_id}') 
+                        
+@bot.on(events.callbackquery.CallbackQuery(data="sett"))
 async def sett(event):    
     Drone = event.client                    
     button = await event.get_message()
@@ -32,7 +47,7 @@ async def sett(event):
         os.rename(path, f'./{event.sender_id}.jpg')
         await t.edit("Temporary thumbnail saved!")
         
-@Drone.on(events.callbackquery.CallbackQuery(data="rem"))
+@bot.on(events.callbackquery.CallbackQuery(data="remt"))
 async def remt(event):  
     Drone = event.client            
     await event.edit('Trying.')
@@ -41,9 +56,7 @@ async def remt(event):
         await event.edit('Removed!')
     except Exception:
         await event.edit("No thumbnail saved.")                        
-  
-@Drone.on(events.NewMessage(incoming=True, pattern=f"{S}"))
-async def start(event):
-    text = "Send me Link of any message to clone it here, For private channel message, send invite link first.\n\n**SUPPORT:** @annyoing_boy"
-    await start_srb(event, text)
     
+    
+
+bot.run_until_disconnected()
