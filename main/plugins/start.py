@@ -1,4 +1,4 @@
-#Github.com/Vasusen-code
+#Github.com/Regarduser
 
 from .. import API_ID, API_HASH, BOT_TOKEN, ACCESS
 
