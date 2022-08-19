@@ -1,5 +1,5 @@
 #Tg:SONY_SAB_TV_SHOW_SONY_SAB_TVSHOW/Radha_Krishna_channel_link
-#Github.com/Vasusen-code
+#Github.com/Regarduser
 
 """
 Plugin for both public & private channels!
